@@ -1,0 +1,4 @@
+foo: 
+a1 = 2
+output a1
+callfoo:

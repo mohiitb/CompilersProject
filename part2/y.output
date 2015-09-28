@@ -1,0 +1,454 @@
+Terminals unused in grammar
+
+   PLUS
+   MINUS
+   MULT
+   DIV
+   DOUBLE_EQ
+   GREATER
+   LESS
+
+
+Grammar
+
+    0 $accept: start_code $end
+
+    1 start_code: %empty
+    2           | start_code start
+
+    3 start: unary_expression
+    4      | assign_expression
+    5      | binary_expression
+    6      | conditional_statement
+    7      | unconditional_statement
+    8      | parameter_list
+    9      | labeler
+
+   10 unary_expression: identifier EQUALS NEGATION identifier
+
+   11 identifier: IDENTIFIER
+
+   12 assign_expression: identifier EQUALS identifier
+   13                  | identifier EQUALS number
+
+   14 number: NUMBER
+
+   15 conditional_statement: IF identifier GO_TO label
+   16                      | IF number GO_TO label
+
+   17 unconditional_statement: GO_TO label
+
+   18 parameter_list: PARAM identifier
+   19               | PARAM number
+
+   20 labeler: label
+
+   21 binary_expression: identifier EQUALS id_number bin_operator id_number
+
+   22 bin_operator: BIN_OPERATOR
+
+   23 id_number: IDENTIFIER
+   24          | NUMBER
+
+   25 label: LABEL
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+BIN_OPERATOR (258) 22
+PLUS (259)
+MINUS (260)
+MULT (261)
+DIV (262)
+DOUBLE_EQ (263)
+GREATER (264)
+LESS (265)
+EQUALS (266) 10 12 13 21
+NEGATION (267) 10
+GO_TO (268) 15 16 17
+PARAM (269) 18 19
+LABEL (270) 25
+IF (271) 15 16
+IDENTIFIER (272) 11 23
+NUMBER (273) 14 24
+
+
+Nonterminals, with rules where they appear
+
+$accept (19)
+    on left: 0
+start_code (20)
+    on left: 1 2, on right: 0 2
+start (21)
+    on left: 3 4 5 6 7 8 9, on right: 2
+unary_expression (22)
+    on left: 10, on right: 3
+identifier (23)
+    on left: 11, on right: 10 12 13 15 18 21
+assign_expression (24)
+    on left: 12 13, on right: 4
+number (25)
+    on left: 14, on right: 13 16 19
+conditional_statement (26)
+    on left: 15 16, on right: 6
+unconditional_statement (27)
+    on left: 17, on right: 7
+parameter_list (28)
+    on left: 18 19, on right: 8
+labeler (29)
+    on left: 20, on right: 9
+binary_expression (30)
+    on left: 21, on right: 5
+bin_operator (31)
+    on left: 22, on right: 21
+id_number (32)
+    on left: 23 24, on right: 21
+label (33)
+    on left: 25, on right: 15 16 17 20
+
+
+State 0
+
+    0 $accept: . start_code $end
+
+    $default  reduce using rule 1 (start_code)
+
+    start_code  go to state 1
+
+
+State 1
+
+    0 $accept: start_code . $end
+    2 start_code: start_code . start
+
+    $end        shift, and go to state 2
+    GO_TO       shift, and go to state 3
+    PARAM       shift, and go to state 4
+    LABEL       shift, and go to state 5
+    IF          shift, and go to state 6
+    IDENTIFIER  shift, and go to state 7
+
+    start                    go to state 8
+    unary_expression         go to state 9
+    identifier               go to state 10
+    assign_expression        go to state 11
+    conditional_statement    go to state 12
+    unconditional_statement  go to state 13
+    parameter_list           go to state 14
+    labeler                  go to state 15
+    binary_expression        go to state 16
+    label                    go to state 17
+
+
+State 2
+
+    0 $accept: start_code $end .
+
+    $default  accept
+
+
+State 3
+
+   17 unconditional_statement: GO_TO . label
+
+    LABEL  shift, and go to state 5
+
+    label  go to state 18
+
+
+State 4
+
+   18 parameter_list: PARAM . identifier
+   19               | PARAM . number
+
+    IDENTIFIER  shift, and go to state 7
+    NUMBER      shift, and go to state 19
+
+    identifier  go to state 20
+    number      go to state 21
+
+
+State 5
+
+   25 label: LABEL .
+
+    $default  reduce using rule 25 (label)
+
+
+State 6
+
+   15 conditional_statement: IF . identifier GO_TO label
+   16                      | IF . number GO_TO label
+
+    IDENTIFIER  shift, and go to state 7
+    NUMBER      shift, and go to state 19
+
+    identifier  go to state 22
+    number      go to state 23
+
+
+State 7
+
+   11 identifier: IDENTIFIER .
+
+    $default  reduce using rule 11 (identifier)
+
+
+State 8
+
+    2 start_code: start_code start .
+
+    $default  reduce using rule 2 (start_code)
+
+
+State 9
+
+    3 start: unary_expression .
+
+    $default  reduce using rule 3 (start)
+
+
+State 10
+
+   10 unary_expression: identifier . EQUALS NEGATION identifier
+   12 assign_expression: identifier . EQUALS identifier
+   13                  | identifier . EQUALS number
+   21 binary_expression: identifier . EQUALS id_number bin_operator id_number
+
+    EQUALS  shift, and go to state 24
+
+
+State 11
+
+    4 start: assign_expression .
+
+    $default  reduce using rule 4 (start)
+
+
+State 12
+
+    6 start: conditional_statement .
+
+    $default  reduce using rule 6 (start)
+
+
+State 13
+
+    7 start: unconditional_statement .
+
+    $default  reduce using rule 7 (start)
+
+
+State 14
+
+    8 start: parameter_list .
+
+    $default  reduce using rule 8 (start)
+
+
+State 15
+
+    9 start: labeler .
+
+    $default  reduce using rule 9 (start)
+
+
+State 16
+
+    5 start: binary_expression .
+
+    $default  reduce using rule 5 (start)
+
+
+State 17
+
+   20 labeler: label .
+
+    $default  reduce using rule 20 (labeler)
+
+
+State 18
+
+   17 unconditional_statement: GO_TO label .
+
+    $default  reduce using rule 17 (unconditional_statement)
+
+
+State 19
+
+   14 number: NUMBER .
+
+    $default  reduce using rule 14 (number)
+
+
+State 20
+
+   18 parameter_list: PARAM identifier .
+
+    $default  reduce using rule 18 (parameter_list)
+
+
+State 21
+
+   19 parameter_list: PARAM number .
+
+    $default  reduce using rule 19 (parameter_list)
+
+
+State 22
+
+   15 conditional_statement: IF identifier . GO_TO label
+
+    GO_TO  shift, and go to state 25
+
+
+State 23
+
+   16 conditional_statement: IF number . GO_TO label
+
+    GO_TO  shift, and go to state 26
+
+
+State 24
+
+   10 unary_expression: identifier EQUALS . NEGATION identifier
+   12 assign_expression: identifier EQUALS . identifier
+   13                  | identifier EQUALS . number
+   21 binary_expression: identifier EQUALS . id_number bin_operator id_number
+
+    NEGATION    shift, and go to state 27
+    IDENTIFIER  shift, and go to state 28
+    NUMBER      shift, and go to state 29
+
+    identifier  go to state 30
+    number      go to state 31
+    id_number   go to state 32
+
+
+State 25
+
+   15 conditional_statement: IF identifier GO_TO . label
+
+    LABEL  shift, and go to state 5
+
+    label  go to state 33
+
+
+State 26
+
+   16 conditional_statement: IF number GO_TO . label
+
+    LABEL  shift, and go to state 5
+
+    label  go to state 34
+
+
+State 27
+
+   10 unary_expression: identifier EQUALS NEGATION . identifier
+
+    IDENTIFIER  shift, and go to state 7
+
+    identifier  go to state 35
+
+
+State 28
+
+   11 identifier: IDENTIFIER .
+   23 id_number: IDENTIFIER .
+
+    BIN_OPERATOR  reduce using rule 23 (id_number)
+    $default      reduce using rule 11 (identifier)
+
+
+State 29
+
+   14 number: NUMBER .
+   24 id_number: NUMBER .
+
+    BIN_OPERATOR  reduce using rule 24 (id_number)
+    $default      reduce using rule 14 (number)
+
+
+State 30
+
+   12 assign_expression: identifier EQUALS identifier .
+
+    $default  reduce using rule 12 (assign_expression)
+
+
+State 31
+
+   13 assign_expression: identifier EQUALS number .
+
+    $default  reduce using rule 13 (assign_expression)
+
+
+State 32
+
+   21 binary_expression: identifier EQUALS id_number . bin_operator id_number
+
+    BIN_OPERATOR  shift, and go to state 36
+
+    bin_operator  go to state 37
+
+
+State 33
+
+   15 conditional_statement: IF identifier GO_TO label .
+
+    $default  reduce using rule 15 (conditional_statement)
+
+
+State 34
+
+   16 conditional_statement: IF number GO_TO label .
+
+    $default  reduce using rule 16 (conditional_statement)
+
+
+State 35
+
+   10 unary_expression: identifier EQUALS NEGATION identifier .
+
+    $default  reduce using rule 10 (unary_expression)
+
+
+State 36
+
+   22 bin_operator: BIN_OPERATOR .
+
+    $default  reduce using rule 22 (bin_operator)
+
+
+State 37
+
+   21 binary_expression: identifier EQUALS id_number bin_operator . id_number
+
+    IDENTIFIER  shift, and go to state 38
+    NUMBER      shift, and go to state 39
+
+    id_number  go to state 40
+
+
+State 38
+
+   23 id_number: IDENTIFIER .
+
+    $default  reduce using rule 23 (id_number)
+
+
+State 39
+
+   24 id_number: NUMBER .
+
+    $default  reduce using rule 24 (id_number)
+
+
+State 40
+
+   21 binary_expression: identifier EQUALS id_number bin_operator id_number .
+
+    $default  reduce using rule 21 (binary_expression)
